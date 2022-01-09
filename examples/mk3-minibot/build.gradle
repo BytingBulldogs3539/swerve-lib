@@ -5,7 +5,7 @@ plugins {
 }
 
 application {
-    mainClassName('com.swervedrivespecialties.examples.mk3minibot.Main')
+    mainClass.set("com.swervedrivespecialties.examples.mk3minibot.Main")
 }
 
 targetCompatibility = JavaVersion.VERSION_11
