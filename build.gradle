@@ -22,7 +22,6 @@ allprojects {
         maven { url = uri('https://maven.revrobotics.com/') }
     }
 }
-
 dependencies {
     implementation 'edu.wpi.first.wpilibj:wpilibj-java:2022.1.1'
 
