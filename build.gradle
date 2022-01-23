@@ -23,6 +23,8 @@ allprojects {
     }
 }
 dependencies {
+    implementation group: 'org.ejml', name: 'ejml-simple', version: '0.38'
+
     implementation 'edu.wpi.first.wpilibj:wpilibj-java:2022.2.1'
 
     // CTRE is implementation because it is not a hard requirement
