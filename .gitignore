@@ -5,3 +5,5 @@
 
 # Intellij Project Files
 /.idea/
+*.class
+.vscode/settings.json
