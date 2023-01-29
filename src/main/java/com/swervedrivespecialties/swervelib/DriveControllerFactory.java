@@ -21,6 +21,18 @@ public interface DriveControllerFactory<Controller extends DriveController, Driv
         return controller;
     }
 
+    default Controller create(
+            ShuffleboardContainer container,
+            DriveConfiguration driveConfiguration,
+            String canbus,
+            ModuleConfiguration moduleConfiguration
+    ) {
+        var controller = create(driveConfiguration, moduleConfiguration);
+        addDashboardEntries(container, controller);
+
+        return controller;
+    }
+
     default Controller create(DriveConfiguration driveConfiguration, String canbus, ModuleConfiguration moduleConfiguration)
     {
         var controller = create(driveConfiguration, moduleConfiguration);

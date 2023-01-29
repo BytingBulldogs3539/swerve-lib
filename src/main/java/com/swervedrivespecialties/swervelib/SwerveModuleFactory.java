@@ -22,10 +22,33 @@ public class SwerveModuleFactory<DriveConfiguration, SteerConfiguration> {
         return new ModuleImplementation(driveController, steerController);
     }
 
+    public SwerveModule create(DriveConfiguration driveConfiguration, String driveCanbus,SteerConfiguration steerConfiguration) {
+        var driveController = driveControllerFactory.create(driveConfiguration, driveCanbus, moduleConfiguration);
+        var steerController = steerControllerFactory.create(steerConfiguration, moduleConfiguration);
+
+        return new ModuleImplementation(driveController, steerController);
+    }
+
     public SwerveModule create(ShuffleboardLayout container, DriveConfiguration driveConfiguration, SteerConfiguration steerConfiguration) {
         var driveController = driveControllerFactory.create(
                 container,
                 driveConfiguration,
+                moduleConfiguration
+        );
+        var steerContainer = steerControllerFactory.create(
+                container,
+                steerConfiguration,
+                moduleConfiguration
+        );
+
+        return new ModuleImplementation(driveController, steerContainer);
+    }
+
+    public SwerveModule create(ShuffleboardLayout container, DriveConfiguration driveConfiguration, String driveCanbus,SteerConfiguration steerConfiguration) {
+        var driveController = driveControllerFactory.create(
+                container,
+                driveConfiguration,
+                driveCanbus,
                 moduleConfiguration
         );
         var steerContainer = steerControllerFactory.create(
