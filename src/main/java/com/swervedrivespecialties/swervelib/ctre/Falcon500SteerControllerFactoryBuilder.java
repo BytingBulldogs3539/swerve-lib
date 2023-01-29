@@ -4,6 +4,8 @@ import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.swervedrivespecialties.swervelib.*;
+
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
 
 public final class Falcon500SteerControllerFactoryBuilder {
@@ -177,8 +179,8 @@ public final class Falcon500SteerControllerFactoryBuilder {
         }
 
         @Override
-        public double getReferenceAngle() {
-            return referenceAngleRadians;
+        public Rotation2d getReferenceAngle() {
+            return Rotation2d.fromRadians(referenceAngleRadians);
         }
 
         @Override
@@ -219,14 +221,14 @@ public final class Falcon500SteerControllerFactoryBuilder {
         }
 
         @Override
-        public double getStateAngle() {
+        public Rotation2d getStateAngle() {
             double motorAngleRadians = motor.getSelectedSensorPosition() * motorEncoderPositionCoefficient;
             motorAngleRadians %= 2.0 * Math.PI;
             if (motorAngleRadians < 0.0) {
                 motorAngleRadians += 2.0 * Math.PI;
             }
 
-            return motorAngleRadians;
+            return Rotation2d.fromRadians(motorAngleRadians);
         }
     }
 }

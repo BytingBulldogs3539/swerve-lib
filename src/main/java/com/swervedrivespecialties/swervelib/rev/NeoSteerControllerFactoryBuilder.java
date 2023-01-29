@@ -4,7 +4,7 @@ import com.revrobotics.*;
 import com.swervedrivespecialties.swervelib.*;
 import com.swervedrivespecialties.swervelib.AbsoluteEncoder;
 
-
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
 
 import static com.swervedrivespecialties.swervelib.rev.RevUtils.checkNeoError;
@@ -120,8 +120,8 @@ public final class NeoSteerControllerFactoryBuilder {
         }
 
         @Override
-        public double getReferenceAngle() {
-            return referenceAngleRadians;
+        public Rotation2d getReferenceAngle() {
+            return Rotation2d.fromRadians(referenceAngleRadians);
         }
 
         @Override
@@ -161,14 +161,14 @@ public final class NeoSteerControllerFactoryBuilder {
         }
 
         @Override
-        public double getStateAngle() {
+        public Rotation2d getStateAngle() {
             double motorAngleRadians = motorEncoder.getPosition();
             motorAngleRadians %= 2.0 * Math.PI;
             if (motorAngleRadians < 0.0) {
                 motorAngleRadians += 2.0 * Math.PI;
             }
 
-            return motorAngleRadians;
+            return Rotation2d.fromRadians(motorAngleRadians);
         }
     }
 }

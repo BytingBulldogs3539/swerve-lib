@@ -1,9 +1,11 @@
 package com.swervedrivespecialties.swervelib;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+
 public interface SteerController {
-    double getReferenceAngle();
+    Rotation2d getReferenceAngle();
 
     void setReferenceAngle(double referenceAngleRadians);
 
-    double getStateAngle();
+    Rotation2d getStateAngle();
 }

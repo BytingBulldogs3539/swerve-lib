@@ -79,7 +79,7 @@ public final class Falcon500DriveControllerFactoryBuilder {
                     CAN_TIMEOUT_MS
             );
 
-            return new ControllerImplementation(motor, sensorVelocityCoefficient);
+            return new ControllerImplementation(motor, sensorVelocityCoefficient, sensorPositionCoefficient);
         }
 
         @Override
@@ -119,17 +119,19 @@ public final class Falcon500DriveControllerFactoryBuilder {
                     CAN_TIMEOUT_MS
             );
 
-            return new ControllerImplementation(motor, sensorVelocityCoefficient);
+            return new ControllerImplementation(motor, sensorVelocityCoefficient, sensorPositionCoefficient);
         }
     }
 
     private class ControllerImplementation implements DriveController {
         private final TalonFX motor;
         private final double sensorVelocityCoefficient;
+        private final double sensorPositionCoefficient;
         private final double nominalVoltage = hasVoltageCompensation() ? Falcon500DriveControllerFactoryBuilder.this.nominalVoltage : 12.0;
 
-        private ControllerImplementation(TalonFX motor, double sensorVelocityCoefficient) {
+        private ControllerImplementation(TalonFX motor, double sensorVelocityCoefficient, double sensorPositionCoefficient) {
             this.motor = motor;
+            this.sensorPositionCoefficient = sensorPositionCoefficient;
             this.sensorVelocityCoefficient = sensorVelocityCoefficient;
         }
 
@@ -141,6 +143,11 @@ public final class Falcon500DriveControllerFactoryBuilder {
         @Override
         public double getStateVelocity() {
             return motor.getSelectedSensorVelocity() * sensorVelocityCoefficient;
+        }
+
+        @Override
+        public double getPositon() {
+            return motor.getSelectedSensorPosition() * sensorPositionCoefficient;
         }
     }
 }

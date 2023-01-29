@@ -1,5 +1,6 @@
 package com.swervedrivespecialties.swervelib;
 
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 
 public class SwerveModuleFactory<DriveConfiguration, SteerConfiguration> {
@@ -70,13 +71,8 @@ public class SwerveModuleFactory<DriveConfiguration, SteerConfiguration> {
         }
 
         @Override
-        public double getDriveVelocity() {
-            return driveController.getStateVelocity();
-        }
-
-        @Override
-        public double getSteerAngle() {
-            return steerController.getStateAngle();
+        public SwerveModulePosition getPosition() {
+            return new SwerveModulePosition(driveController.getPositon(), steerController.getStateAngle());
         }
 
         @Override
@@ -86,14 +82,14 @@ public class SwerveModuleFactory<DriveConfiguration, SteerConfiguration> {
                 steerAngle += 2.0 * Math.PI;
             }
 
-            double difference = steerAngle - getSteerAngle();
+            double difference = steerAngle - getPosition().angle.getRadians();
             // Change the target angle so the difference is in the range [-pi, pi) instead of [0, 2pi)
             if (difference >= Math.PI) {
                 steerAngle -= 2.0 * Math.PI;
             } else if (difference < -Math.PI) {
                 steerAngle += 2.0 * Math.PI;
             }
-            difference = steerAngle - getSteerAngle(); // Recalculate difference
+            difference = steerAngle - getPosition().angle.getRadians(); // Recalculate difference
 
             // If the difference is greater than 90 deg or less than -90 deg the drive can be inverted so the total
             // movement of the module is less than 90 deg
@@ -112,5 +108,6 @@ public class SwerveModuleFactory<DriveConfiguration, SteerConfiguration> {
             driveController.setReferenceVoltage(driveVoltage);
             steerController.setReferenceAngle(steerAngle);
         }
+
     }
 }
