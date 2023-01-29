@@ -5,14 +5,25 @@ import java.util.Objects;
 public class Falcon500SteerConfiguration<EncoderConfiguration> {
     private final int motorPort;
     private final EncoderConfiguration encoderConfiguration;
+    private final String canbus;
 
     public Falcon500SteerConfiguration(int motorPort, EncoderConfiguration encoderConfiguration) {
         this.motorPort = motorPort;
         this.encoderConfiguration = encoderConfiguration;
+        canbus = null;
+    }
+    public Falcon500SteerConfiguration(int motorPort, String canbus,EncoderConfiguration encoderConfiguration) {
+        this.motorPort = motorPort;
+        this.encoderConfiguration = encoderConfiguration;
+        this.canbus = canbus;
     }
 
     public int getMotorPort() {
         return motorPort;
+    }
+
+    public String getCanbus() {
+        return canbus;
     }
 
     public EncoderConfiguration getEncoderConfiguration() {

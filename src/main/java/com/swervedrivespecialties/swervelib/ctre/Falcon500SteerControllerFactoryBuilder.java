@@ -112,8 +112,17 @@ public final class Falcon500SteerControllerFactoryBuilder {
                 motorConfiguration.supplyCurrLimit.currentLimit = currentLimit;
                 motorConfiguration.supplyCurrLimit.enable = true;
             }
-
-            TalonFX motor = new TalonFX(steerConfiguration.getMotorPort());
+            TalonFX motor;
+            String canbus = steerConfiguration.getCanbus();
+            if(canbus!=null)
+            {
+                motor = new TalonFX(steerConfiguration.getMotorPort(), canbus);
+            }
+            else
+            {
+                motor = new TalonFX(steerConfiguration.getMotorPort());
+            }
+            
             motor.configAllSettings(motorConfiguration, CAN_TIMEOUT_MS);
 
             if (hasVoltageCompensation()) {

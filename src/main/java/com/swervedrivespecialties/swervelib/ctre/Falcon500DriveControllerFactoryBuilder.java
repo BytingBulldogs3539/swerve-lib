@@ -41,9 +41,9 @@ public final class Falcon500DriveControllerFactoryBuilder {
         return Double.isFinite(currentLimit);
     }
 
-    private class FactoryImplementation implements DriveControllerFactory<ControllerImplementation, Integer> {
+    private class FactoryImplementation implements DriveControllerFactory<ControllerImplementation,Integer> {
         @Override
-        public ControllerImplementation create(Integer driveConfiguration, ModuleConfiguration moduleConfiguration) {
+        public ControllerImplementation create(Integer id, String canbus,ModuleConfiguration moduleConfiguration) {
             TalonFXConfiguration motorConfiguration = new TalonFXConfiguration();
 
             double sensorPositionCoefficient = Math.PI * moduleConfiguration.getWheelDiameter() * moduleConfiguration.getDriveReduction() / TICKS_PER_ROTATION;
@@ -58,7 +58,47 @@ public final class Falcon500DriveControllerFactoryBuilder {
                 motorConfiguration.supplyCurrLimit.enable = true;
             }
 
-            TalonFX motor = new TalonFX(driveConfiguration);
+            TalonFX motor = new TalonFX(id, canbus);
+            motor.configAllSettings(motorConfiguration);
+
+            if (hasVoltageCompensation()) {
+                // Enable voltage compensation
+                motor.enableVoltageCompensation(true);
+            }
+
+            motor.setNeutralMode(NeutralMode.Brake);
+
+            motor.setInverted(moduleConfiguration.isDriveInverted() ? TalonFXInvertType.Clockwise : TalonFXInvertType.CounterClockwise);
+            motor.setSensorPhase(true);
+
+            // Reduce CAN status frame rates
+            
+            motor.setStatusFramePeriod(
+                    StatusFrameEnhanced.Status_1_General,
+                    STATUS_FRAME_GENERAL_PERIOD_MS,
+                    CAN_TIMEOUT_MS
+            );
+
+            return new ControllerImplementation(motor, sensorVelocityCoefficient);
+        }
+
+        @Override
+        public ControllerImplementation create(Integer id, ModuleConfiguration moduleConfiguration) {
+            TalonFXConfiguration motorConfiguration = new TalonFXConfiguration();
+
+            double sensorPositionCoefficient = Math.PI * moduleConfiguration.getWheelDiameter() * moduleConfiguration.getDriveReduction() / TICKS_PER_ROTATION;
+            double sensorVelocityCoefficient = sensorPositionCoefficient * 10.0;
+
+            if (hasVoltageCompensation()) {
+                motorConfiguration.voltageCompSaturation = nominalVoltage;
+            }
+
+            if (hasCurrentLimit()) {
+                motorConfiguration.supplyCurrLimit.currentLimit = currentLimit;
+                motorConfiguration.supplyCurrLimit.enable = true;
+            }
+
+            TalonFX motor = new TalonFX(id);
             motor.configAllSettings(motorConfiguration);
 
             if (hasVoltageCompensation()) {
