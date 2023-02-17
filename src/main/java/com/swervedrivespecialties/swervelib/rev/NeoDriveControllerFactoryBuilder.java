@@ -64,6 +64,12 @@ public final class NeoDriveControllerFactoryBuilder {
 
             return new ControllerImplementation(motor, encoder);
         }
+
+        @Override
+        public ControllerImplementation create(Integer id, String canbus,
+                ModuleConfiguration moduleConfiguration) {
+            return create(id, moduleConfiguration);
+        }
     }
 
     private static class ControllerImplementation implements DriveController {

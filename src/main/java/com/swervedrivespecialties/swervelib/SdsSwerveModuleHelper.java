@@ -115,7 +115,7 @@ public final class SdsSwerveModuleHelper {
                 driveMotorCanbus,
                 new Falcon500SteerConfiguration<>(
                         steerMotorPort,
-                        steerEncoderCanbus,
+                        steerMotorCanbus,
                         new CanCoderAbsoluteConfiguration(steerEncoderPort,steerEncoderCanbus, steerOffset)
                 )
         );

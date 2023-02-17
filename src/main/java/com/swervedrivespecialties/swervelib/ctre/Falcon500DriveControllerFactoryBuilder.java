@@ -43,7 +43,7 @@ public final class Falcon500DriveControllerFactoryBuilder {
 
     private class FactoryImplementation implements DriveControllerFactory<ControllerImplementation,Integer> {
         @Override
-        public ControllerImplementation create(Integer id, String canbus,ModuleConfiguration moduleConfiguration) {
+        public ControllerImplementation create(Integer id, String canbus, ModuleConfiguration moduleConfiguration) {
             TalonFXConfiguration motorConfiguration = new TalonFXConfiguration();
 
             double sensorPositionCoefficient = Math.PI * moduleConfiguration.getWheelDiameter() * moduleConfiguration.getDriveReduction() / TICKS_PER_ROTATION;

@@ -27,17 +27,13 @@ public interface DriveControllerFactory<Controller extends DriveController, Driv
             String canbus,
             ModuleConfiguration moduleConfiguration
     ) {
-        var controller = create(driveConfiguration, moduleConfiguration);
+        var controller = create(driveConfiguration, canbus, moduleConfiguration);
         addDashboardEntries(container, controller);
 
         return controller;
     }
 
-    default Controller create(DriveConfiguration driveConfiguration, String canbus, ModuleConfiguration moduleConfiguration)
-    {
-        var controller = create(driveConfiguration, moduleConfiguration);
-        return controller;
-    }
+    Controller create(DriveConfiguration driveConfiguration, String canbus, ModuleConfiguration moduleConfiguration);
 
     Controller create(DriveConfiguration driveConfiguration, ModuleConfiguration moduleConfiguration);
     
