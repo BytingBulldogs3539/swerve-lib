@@ -44,6 +44,15 @@ public final class SimplePathBuilder {
         addSegment(new ArcSegment(lastPosition, position, center), rotation);
         return this;
     }
+    public SimplePathBuilder arcTo(Vector2 position, Vector2 center, boolean clockwise) {
+        addSegment(new ArcSegment(lastPosition, position, center, clockwise));
+        return this;
+    }
+
+    public SimplePathBuilder arcTo(Vector2 position, Vector2 center, boolean clockwise, Rotation2 rotation) {
+        addSegment(new ArcSegment(lastPosition, position, center, clockwise), rotation);
+        return this;
+    }
 
     public SimplePathBuilder lineTo(Vector2 position) {
         addSegment(new LineSegment(lastPosition, position));
