@@ -101,6 +101,10 @@ public final class SimplePathBuilder {
 
         @Override
         public double getLength() {
+            if(deltaStart.cross(deltaEnd) <= 0.0 != clockwise)
+            {
+                return deltaStart.length * ((2*Math.PI)- Vector2.getAngleBetween(deltaStart, deltaEnd).toRadians());
+            }
             return deltaStart.length * Vector2.getAngleBetween(deltaStart, deltaEnd).toRadians();
         }
     }
