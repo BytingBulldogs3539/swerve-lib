@@ -68,6 +68,13 @@ public final class SimplePathBuilder {
 
             clockwise = deltaStart.cross(deltaEnd) <= 0.0;
         }
+        public ArcSegment(Vector2 start, Vector2 end, Vector2 center, boolean clockwise) {
+            this.center = center;
+            this.deltaStart = start.subtract(center);
+            this.deltaEnd = end.subtract(center);
+
+            this.clockwise = clockwise;
+        }
 
         @Override
         public State calculate(double distance) {
