@@ -58,7 +58,15 @@ public final class Falcon500DriveControllerFactoryBuilder {
                 motorConfiguration.supplyCurrLimit.enable = true;
             }
 
-            TalonFX motor = new TalonFX(id, canbus);
+            TalonFX motor;
+            if(canbus!=null)
+            {
+                motor = new TalonFX(id, canbus);
+            }
+            else
+            {
+                motor = new TalonFX(id);
+            }
             motor.configAllSettings(motorConfiguration);
 
             if (hasVoltageCompensation()) {

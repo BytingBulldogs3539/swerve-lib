@@ -28,7 +28,7 @@ public class CanCoderFactoryBuilder {
             if(canbus != null)
                 encoder = new CANCoder(configuration.getId(), canbus);
             else
-                encoder = new CANCoder(configuration.getId(), canbus);
+                encoder = new CANCoder(configuration.getId());
                 
             encoder.configAllSettings(config, 250);
             encoder.setStatusFramePeriod(CANCoderStatusFrame.SensorData, periodMilliseconds, 250);
